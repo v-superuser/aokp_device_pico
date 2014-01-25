@@ -1,2 +1,2 @@
-aokp_device_pico
-================
+AOKP Device Tree for HTC Explorer/Pico
+=====================================
