@@ -15,5 +15,5 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/cm.mk \
+    $(LOCAL_DIR)/aokp.mk \
     $(LOCAL_DIR)/pico.mk
