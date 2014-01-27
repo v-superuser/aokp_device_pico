@@ -3,6 +3,8 @@
 ## Tra la la la la!
 
 ### just hope this makes my work easier :)
+#### Make this as close as possible to manual patching, so that we don't
+##### have to worry about upstream changes :)
 
 WORKING_DIR=`basename $PWD`
 ACTUAL_DIR=cyanogenmod-11.0;
