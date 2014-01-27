@@ -12,9 +12,12 @@ then
 cd ../../../;
 fi;
 
+if [ "$1" == "init" ]; then
+
 cd build;
 
-if `git remote -v | grep -Fxq "legacy"`
+#TMP_FLAG=`git remote -v | grep -q legacy && echo $?`
+if `git remote -v | grep -q legacy`
 then
 #good to go!
 echo "Good to go! patching android_build"
@@ -28,7 +31,7 @@ git merge FETCH_HEAD;
 cd ../;
 
 cd frameworks/av;
-if `git remote -v | grep -Fxq "legacy"`
+if `git remote -v | grep -q legacy`
 then
 #good to go!
 echo "Good to go! patching android_frameworks_av"
@@ -42,7 +45,7 @@ git merge FETCH_HEAD;
 cd ../../;
 
 cd vendor/cm;
-if `git remote -v | grep -Fxq "legacy"`
+if `git remote -v | grep -q legacy`
 then
 #good to go!
 echo "Good to go! patching android_vendor_cm"
@@ -67,3 +70,40 @@ awk '$0 == "        mLongshotEnabled = false;" && c == 0 {c = 1; print "#endif"}
 rm frameworks/av/services/camera/libcameraservice/api1/CameraClient.cpp;
 rm frameworks/av/services/camera/libcameraservice/api1/CameraClient1.cpp;
 mv frameworks/av/services/camera/libcameraservice/api1/CameraClient2.cpp frameworks/av/services/camera/libcameraservice/api1/CameraClient.cpp; 
+
+
+TMP_LINE=`grep -n "        rc = camera->sendCommand(CAMERA_CMD_LONGSHOT_ON, 0, 0);" frameworks/base/core/jni/android_hardware_Camera.cpp | cut -f1 -d:`
+TMP_LINE=$(($TMP_LINE-1))
+awk -v n=$TMP_LINE -v s="#if 0" 'NR == n {print s} {print}' frameworks/base/core/jni/android_hardware_Camera.cpp > frameworks/base/core/jni/android_hardware_Camera1.cpp
+rm frameworks/base/core/jni/android_hardware_Camera.cpp
+
+TMP_LINE=`grep -n "        rc = camera->sendCommand(CAMERA_CMD_LONGSHOT_OFF, 0, 0);" frameworks/base/core/jni/android_hardware_Camera1.cpp | cut -f1 -d:`
+TMP_LINE=$(($TMP_LINE+2))
+awk -v n=$TMP_LINE -v s="#endif" 'NR == n {print s} {print}' frameworks/base/core/jni/android_hardware_Camera1.cpp > frameworks/base/core/jni/android_hardware_Camera2.cpp
+rm frameworks/base/core/jni/android_hardware_Camera1.cpp
+
+TMP_LINE=`grep -n "        rc = camera->sendCommand(CAMERA_CMD_METADATA_ON, 0, 0);" frameworks/base/core/jni/android_hardware_Camera2.cpp | cut -f1 -d:`
+TMP_LINE=$(($TMP_LINE-1))
+awk -v n=$TMP_LINE -v s="#if 0" 'NR == n {print s} {print}' frameworks/base/core/jni/android_hardware_Camera2.cpp > frameworks/base/core/jni/android_hardware_Camera3.cpp
+rm frameworks/base/core/jni/android_hardware_Camera2.cpp
+
+TMP_LINE=`grep -n "        rc = camera->sendCommand(CAMERA_CMD_METADATA_OFF, 0, 0);" frameworks/base/core/jni/android_hardware_Camera3.cpp | cut -f1 -d:`
+TMP_LINE=$(($TMP_LINE+1))
+awk -v n=$TMP_LINE -v s="#endif" 'NR == n {print s} {print}' frameworks/base/core/jni/android_hardware_Camera3.cpp > frameworks/base/core/jni/android_hardware_Camera4.cpp
+rm frameworks/base/core/jni/android_hardware_Camera3.cpp
+
+mv frameworks/base/core/jni/android_hardware_Camera4.cpp frameworks/base/core/jni/android_hardware_Camera.cpp
+
+fi;
+
+if [ "$1" == "cleanup" ]; then
+cd frameworks/av;
+git reset --hard;
+cd ../base;
+git reset --hard;
+cd ../../;
+fi;
+
+if [ "$1" == "" ]; then
+echo "Nothing to do";
+fi;
