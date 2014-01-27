@@ -54,3 +54,16 @@ git fetch legacy cm-11.0;
 git merge FETCH_HEAD;
 cd ../../;
 
+#sed "/cat/ { N; s/    } else if (cmd == CAMERA_CMD_METADATA_ON) {\n/#if 0\n&/ }" frameworks/av/services/camera/libcameraservice/api1/CameraClient.cpp
+# frameworks/av patch
+## //TODO: Simplify this :\
+
+awk '$0 == "    } else if (cmd == CAMERA_CMD_METADATA_ON) {" && c == 0 {c = 1; print "#if 0"}; {print}' \
+	frameworks/av/services/camera/libcameraservice/api1/CameraClient.cpp > frameworks/av/services/camera/libcameraservice/api1/CameraClient1.cpp;
+
+awk '$0 == "        mLongshotEnabled = false;" && c == 0 {c = 1; print "#endif"}; {print}' \
+	frameworks/av/services/camera/libcameraservice/api1/CameraClient1.cpp > frameworks/av/services/camera/libcameraservice/api1/CameraClient2.cpp;
+
+rm frameworks/av/services/camera/libcameraservice/api1/CameraClient.cpp;
+rm frameworks/av/services/camera/libcameraservice/api1/CameraClient1.cpp;
+mv frameworks/av/services/camera/libcameraservice/api1/CameraClient2.cpp frameworks/av/services/camera/libcameraservice/api1/CameraClient.cpp; 
