@@ -196,8 +196,6 @@ ENABLE_JSC_JIT := true
 JS_ENGINE := v8
 HTTP := chrome
 
-
-
 # FM Radio
 BOARD_HAVE_FM_RADIO := true
 BOARD_FM_DEVICE := bcm4330
@@ -224,3 +222,6 @@ TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
 
 # Webkit
 TARGET_FORCE_CPU_UPLOAD := true
+
+# Prebuilt Chromium_org
+PRODUCT_PREBUILT_WEBVIEWCHROMIUM := yes

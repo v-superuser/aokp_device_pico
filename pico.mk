@@ -18,6 +18,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit "small" languages, instead of languages_full
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 
+# Inherit prebuilt chromium_org
+$(call inherit-product-if-exists, vendor/htc/chromium_org_prebuilt_pico/prebuilt.mk)
+
 # Overlay
 # //TODO: Update overlay, remove unrequired packages
 DEVICE_PACKAGE_OVERLAYS += device/htc/pico/overlay

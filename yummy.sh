@@ -109,3 +109,7 @@ fi;
 if [ "$1" == "" ]; then
 echo "Nothing to do";
 fi;
+
+if [ "$1" == "help" ]; then
+echo "yummy.sh [init|cleanup|help]";
+fi;
