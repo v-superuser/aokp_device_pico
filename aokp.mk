@@ -11,6 +11,8 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/pico/overlay
 
 PRODUCT_RELEASE_NAME := Explorer
 
+CM_BUILDTYPE := NIGHTLY
+
 # Product name
 PRODUCT_NAME := aokp_pico
 PRODUCT_BRAND := HTC
