@@ -246,10 +246,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.purgeable_assets=1
 
-# Try an UMS Dirty Ratio of 20 (default: 50)
-# //TODO: Experimental feature. Test.
+# UMS dirty ratio, higher value, higher speeds, higher instability too.
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vold.umsdirtyratio=20
+    ro.vold.umsdirtyratio=50
 
 # Disable preloading of EGL/GL drivers in Zygote at boot time
 PRODUCT_PROPERTY_OVERRIDES += \
