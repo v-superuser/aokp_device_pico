@@ -19,7 +19,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 
 # Inherit prebuilt chromium_org
-$(call inherit-product-if-exists, vendor/htc/chromium_org_prebuilt_pico/prebuilt.mk)
+# Not yet, needs more rework
+#$(call inherit-product-if-exists, vendor/htc/chromium_org_prebuilt_pico/prebuilt.mk)
 
 # Overlay
 # //TODO: Update overlay, remove unrequired packages
@@ -188,7 +189,7 @@ PRODUCT_COPY_FILES += \
     vendor/htc/pico/proprietary/lib/egl/libEGL_adreno200.so:system/lib/egl/libEGL_adreno200.so \
     vendor/htc/pico/proprietary/lib/egl/libGLESv1_CM_adreno200.so:system/lib/egl/libGLESv1_CM_adreno200.so \
     vendor/htc/pico/proprietary/lib/egl/libGLESv2_adreno200.so:system/lib/egl/libGLESv2_adreno200.so \
-    vendor/htc/pico/proprietary/lib/egl/libplayback_adreno200.so:system/lib/egl/libplayback_adreno200.so \
+    vendor/htc/pico/proprietary/lib/egl/libGLESv2S3D_adreno200.so:system/lib/egl/libGLESv2S3D_adreno200.so \
     vendor/htc/pico/proprietary/lib/egl/libq3dtools_adreno200.so:system/lib/egl/libq3dtools_adreno200.so 
 
 # RIL
@@ -269,6 +270,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # If exist "Classic WebView", allow using "Classic WebView"
 # Disabled by default, i.e. use chromium by default
+# Todo: patch frameworks, for allowing reusing classic webview
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.webview.provider=chromium
 
