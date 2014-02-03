@@ -12,6 +12,8 @@ DEVICE_PACKAGE_OVERLAYS += device/htc/pico/overlay
 PRODUCT_RELEASE_NAME := Explorer
 
 CM_BUILDTYPE := NIGHTLY
+# Custom tag for unofficial builds
+TARGET_UNOFFICIAL_BUILD_ID := TeamCody
 
 # Product name
 PRODUCT_NAME := aokp_pico
